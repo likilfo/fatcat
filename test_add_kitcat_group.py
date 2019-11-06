@@ -48,15 +48,14 @@ class TestAddKitcatGroup(unittest.TestCase):
         wd = self.wd
         self.open_home_page()
         self.login_by_admin(wd)
-        self.open_home_page(wd)
+        self.open_group_page(wd)
         self.create_new_group(wd, Group(name='kitcat',
                                         header='kitcat group header',
                                         footer='kitcat group footer'))
         self.return_to_group_page(wd)
 
     def tearDown(self):
-        self.driver.quit()
-        self.assertEqual([], self.verificationErrors)
+        self.wd.quit()
 
 if __name__ == "__main__":
     unittest.main()
