@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from selenium import webdriver
 import unittest
-from group import Group
+from entities import Group, User
 
-class TestAddKitcatGroup(unittest.TestCase):
+class TestAddNewEntities(unittest.TestCase):
     def setUp(self):
         self.wd = webdriver.Firefox(
             executable_path=r'C:\Windows\SysWOW64\geckodriver.exe')
@@ -28,6 +28,7 @@ class TestAddKitcatGroup(unittest.TestCase):
     def open_group_page(self, wd):
         wd.find_element_by_link_text("groups").click()
 
+
     def create_new_group(self, wd, group):
         wd.find_element_by_name("new").click()
         wd.find_element_by_name("group_name").click()
@@ -41,6 +42,18 @@ class TestAddKitcatGroup(unittest.TestCase):
         wd.find_element_by_name("group_footer").send_keys(group.footer)
         wd.find_element_by_name("submit").click()
 
+    def open_adding_new_contacts_page(self, wd):
+        wd.find_element_by_link_text("add new").click()
+
+
+    def create_new_contact(self, wd, user):
+        for key, value in user.__dict__.items():
+            wd.find_element_by_name(key).click()
+            wd.find_element_by_name(key).clear()
+            wd.find_element_by_name(key).send_keys(value)
+        wd.find_element_by_name("submit").click()
+
+
     def return_to_group_page(self, wd):
         wd.find_element_by_link_text("group page").click()
 
@@ -53,6 +66,20 @@ class TestAddKitcatGroup(unittest.TestCase):
                                         header='kitcat group header',
                                         footer='kitcat group footer'))
         self.return_to_group_page(wd)
+
+
+    def test_add_new_contact(self):
+        wd = self.wd
+        self.open_home_page()
+        self.login_by_admin(wd)
+        self.open_adding_new_contacts_page(wd)
+        self.create_new_contact(wd, User(firstname='kitty',
+                                         middlename='little',
+                                         lastname='hwllo',
+                                         nickname='likilfo',
+                                         title='molly',
+                                         company='Kit&Co'))
+
 
     def tearDown(self):
         self.wd.quit()
