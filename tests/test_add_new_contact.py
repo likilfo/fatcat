@@ -1,8 +1,8 @@
-from helpers import User
+from model.user import User
 
 def test_add_new_contact(app):
     app.login_by_admin()
-    app.create_new_contact(User(firstname='kitty',
+    app.contact.create(User(firstname='kitty',
                                      middlename='little',
                                      lastname='hwllo',
                                      nickname='likilfo',
