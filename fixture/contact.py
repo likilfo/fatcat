@@ -15,3 +15,4 @@ class ContactHelper:
             wd.find_element_by_name(key).clear()
             wd.find_element_by_name(key).send_keys(value)
         wd.find_element_by_name("submit").click()
+        wd.find_element_by_link_text("home").click()

@@ -8,3 +8,4 @@ def test_add_new_contact(app):
                                      nickname='likilfo',
                                      title='molly',
                                      company='Kit&Co'))
+    app.session.logout()
