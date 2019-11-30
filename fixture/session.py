@@ -18,5 +18,10 @@ class SessionHelper:
 
 
     def logout(self):
-        self.app.wd.find_element_by_link_text("Logout").click()
+        for attemtp in range(2):
+            try:
+                self.app.wd.find_element_by_link_text("Logout").click()
+            except:
+                pass
+
 
