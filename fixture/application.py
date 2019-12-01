@@ -21,5 +21,12 @@ class Application:
     def login_by_admin(self):
         self.session.login(login='admin', password='secret')
 
+    def is_valid(self):
+        try:
+            self.wd.current_url
+            return True
+        except:
+            return False
+
     def destroy(self):
         self.wd.quit()
