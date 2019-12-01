@@ -2,5 +2,5 @@
 from model.group import Group
 
 
-def test_edit_group(app):
+def test_edit_group(app, create_group):
     app.group.edit_first_group(Group(name='fitcat'))

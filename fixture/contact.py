@@ -12,6 +12,9 @@ class ContactHelper(CommonHelper):
         wd.find_element_by_name(submit).click()
         wd.find_element_by_link_text("home").click()
 
+    def is_exist(self):
+        return len(self.wd.find_elements_by_name("selected[]"))
+
     def create(self, user):
         wd = self.wd
         wd.find_element_by_link_text("add new").click()

@@ -1,5 +1,6 @@
 import pytest
-
+from model.group import Group
+from model.user import User
 from fixture.application import Application
 
 fixture = None
@@ -23,3 +24,21 @@ def stop(request):
         fixture.destroy()
     request.addfinalizer(fin)
     return app
+
+@pytest.fixture
+def create_group():
+    if not fixture.group.is_exist():
+        fixture.group.create(Group(name='kitcat',
+                           header='kitcat group header',
+                           footer='kitcat group footer'))
+
+
+@pytest.fixture
+def create_contact():
+    if not fixture.contact.is_exist():
+        fixture.contact.create(User(firstname='kitty',
+                                     middlename='little',
+                                     lastname='hwllo',
+                                     nickname='likilfo',
+                                     title='molly',
+                                     company='Kit&Co'))

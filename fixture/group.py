@@ -9,6 +9,10 @@ class GroupHelper(CommonHelper):
     def open_group_page(self):
         self.wd.find_element_by_link_text("groups").click()
 
+    def is_exist(self):
+        self.open_group_page()
+        return len(self.wd.find_elements_by_name("selected[]"))
+
     def create(self, group):
         wd = self.wd
         self.open_group_page()
