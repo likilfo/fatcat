@@ -1,5 +1,5 @@
 from .common import CommonHelper
-
+from model.group import Group
 class GroupHelper(CommonHelper):
 
     def __init__(self, app):
@@ -33,6 +33,15 @@ class GroupHelper(CommonHelper):
         self.fill_fields(group)
         wd.find_element_by_name("update").click()
 
+    def get_group_list(self):
+        wd = self.wd
+        self.open_group_page()
+        groups = []
+        for element in wd.find_elements_by_css_selector('span.group'):
+            text = element.text
+            id = element.find_element_by_name("selected[]").get_attribute("value")
+            groups.append(Group(name=text, id=id))
+        return groups
 
     def delete_first_group(self):
         wd = self.wd

@@ -31,6 +31,7 @@ def create_group():
         fixture.group.create(Group(name='kitcat',
                            header='kitcat group header',
                            footer='kitcat group footer'))
+    return fixture.group.get_group_list()
 
 
 @pytest.fixture
