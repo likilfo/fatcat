@@ -7,7 +7,10 @@ class GroupHelper(CommonHelper):
         self.wd = self.app.wd
 
     def open_group_page(self):
-        self.wd.find_element_by_link_text("groups").click()
+        wd = self.wd
+        if not (wd.current_url.endswith("/group.php")
+                and len(wd.find_elements_by_name('new')) > 0):
+            self.wd.find_element_by_link_text("groups").click()
 
     def is_exist(self):
         self.open_group_page()
