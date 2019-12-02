@@ -26,3 +26,9 @@ class ContactHelper(CommonHelper):
         wd.find_element_by_xpath('//*[@title="Edit"]').click()
         self.fill_contact_form(user, "update")
 
+    def delete_first(self):
+        wd = self.wd
+        wd.find_element_by_name("selected[]").click()
+        wd.find_element_by_xpath('//*[@value="Delete"]').click()
+        alert = wd.switch_to.alert
+        alert.accept()
