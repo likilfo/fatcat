@@ -39,9 +39,8 @@ class ContactHelper(CommonHelper):
         wd = self.wd
         contacts = []
         for element in wd.find_elements_by_name('entry'):
-            name = element.find_element_by_xpath('//td[3]').get_attribute("innerHTML")
-            sername = element.find_element_by_xpath('//td[2]').get_attribute("innerHTML")
+            name = element.find_element_by_xpath('.//td[3]').get_attribute("innerHTML")
+            sername = element.find_element_by_xpath('.//td[2]').get_attribute("innerHTML")
             id = element.find_element_by_name('selected[]').get_attribute("value")
             contacts.append(User(firstname=name, lastname=sername, id=id))
-        print(contacts)
         return contacts
