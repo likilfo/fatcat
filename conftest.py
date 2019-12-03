@@ -43,3 +43,4 @@ def create_contact():
                                      nickname='likilfo',
                                      title='molly',
                                      company='Kit&Co'))
+    return fixture.contact.get_contact_list()
