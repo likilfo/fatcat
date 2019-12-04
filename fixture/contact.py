@@ -25,20 +25,29 @@ class ContactHelper(CommonHelper):
         self.fill_contact_form(user, 'submit')
         self.contact_list_caсhe = None
 
-    def edit_first_contact(self, user):
+    def select_contact_by_index(self, index):
         wd = self.wd
-        wd.find_element_by_name("selected[]").click()
+        wd.find_elements_by_name("selected[]")[index].click()
+
+    def delete_contact_by_index(self, index):
+        wd = self.wd
+        self.select_contact_by_index(index)
+        wd.find_element_by_xpath('//*[@value="Delete"]').click()
+        wd.find_element_by_link_text("home").click()
+        self.group_cache_list = None
+
+    def edit_first_contact(self, user, index):
+        self.edit_contact_by_index(user, index)
+
+    def edit_contact_by_index(self, user, index):
+        wd = self.wd
+        self.select_contact_by_index(index)
         wd.find_element_by_xpath('//*[@title="Edit"]').click()
         self.fill_contact_form(user, "update")
         self.contact_list_caсhe = None
 
-    def delete_first(self):
-        wd = self.wd
-        wd.find_element_by_name("selected[]").click()
-        wd.find_element_by_xpath('//*[@value="Delete"]').click()
-        alert = wd.switch_to.alert
-        alert.accept()
-        self.contact_list_caсhe = None
+    def delete_first(self, index):
+        self.edit_contact_by_index(index)
 
     def get_contact_list(self):
         if self.contact_list_caсhe == None:

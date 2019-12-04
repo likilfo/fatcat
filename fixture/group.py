@@ -28,10 +28,12 @@ class GroupHelper(CommonHelper):
         wd.find_element_by_link_text("home").click()
         self.group_cache_list = None
 
-    def edit_first_group(self, group):
+    def edit_first_group(self, index):
+        self.delete_group_by_index(index)
+
+    def edit_groupt_by_index(self, group, index):
         wd = self.wd
-        self.open_group_page()
-        wd.find_element_by_name("selected[]").click()
+        self.select_group_by_index(index)
         wd.find_element_by_name("edit").click()
         self.fill_fields(group)
         wd.find_element_by_name("update").click()
@@ -48,10 +50,17 @@ class GroupHelper(CommonHelper):
                 self.group_cache_list.append(Group(name=text, id=id))
         return self.group_cache_list
 
-    def delete_first_group(self):
+    def select_group_by_index(self, index):
         wd = self.wd
         self.open_group_page()
-        wd.find_element_by_name("selected[]").click()
+        wd.find_elements_by_name("selected[]")[index].click()
+
+    def delete_first_group(self):
+        self.delete_group_by_index(0)
+
+    def delete_group_by_index(self, index):
+        wd = self.wd
+        self.select_group_by_index(index)
         wd.find_element_by_name("delete").click()
         wd.find_element_by_link_text("home").click()
         self.group_cache_list = None
