@@ -28,9 +28,10 @@ def stop(request):
 @pytest.fixture
 def create_group():
     if not fixture.group.is_exist():
-        fixture.group.create(Group(name='kitcat',
-                           header='kitcat group header',
-                           footer='kitcat group footer'))
+        if fixture.group.count() == 0:
+            fixture.group.create(Group(name='kitcat',
+                               header='kitcat group header',
+                               footer='kitcat group footer'))
     return fixture.group.get_group_list()
 
 

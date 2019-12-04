@@ -9,7 +9,7 @@ def test_add_kitcat_group(app):
                            footer='kitcat group footer')
     app.group.create(group)
     new_groups = app.group.get_group_list()
-    assert len(new_groups) - 1 == len(old_groups)
+    assert app.group.count() - 1 == len(old_groups)
     old_groups.append(group)
     assert sorted(old_groups, key=Group.id_or_max) \
            == sorted(new_groups, key=Group.id_or_max)
