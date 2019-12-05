@@ -1,5 +1,6 @@
 from .common import CommonHelper
 from model.user import User
+from time import sleep
 
 
 class ContactHelper(CommonHelper):
@@ -25,33 +26,33 @@ class ContactHelper(CommonHelper):
         self.fill_contact_form(user, 'submit')
         self.contact_list_caсhe = None
 
-    def select_contact_by_index(self, index):
-        wd = self.wd
-        wd.find_elements_by_name("selected[]")[index].click()
-
     def delete_contact_by_index(self, index):
         wd = self.wd
-        self.select_contact_by_index(index)
+        wd.find_elements_by_name("selected[]")[index].click()
         wd.find_element_by_xpath('//*[@value="Delete"]').click()
-        wd.find_element_by_link_text("home").click()
-        self.group_cache_list = None
+        alert = wd.switch_to.alert
+        alert.accept()
+        self.contact_list_caсhe = None
 
     def edit_first_contact(self, user, index):
         self.edit_contact_by_index(user, index)
 
     def edit_contact_by_index(self, user, index):
         wd = self.wd
-        self.select_contact_by_index(index)
-        wd.find_element_by_xpath('//*[@title="Edit"]').click()
+        wd.find_element_by_link_text('home')
+        wd.find_elements_by_xpath('//*[@title="Edit"]')[index].click()
         self.fill_contact_form(user, "update")
         self.contact_list_caсhe = None
 
     def delete_first(self, index):
-        self.edit_contact_by_index(index)
+        self.delete_contact_by_index(index)
 
     def get_contact_list(self):
         if self.contact_list_caсhe == None:
+            print('!!!!!!!!!!!!!!!!!!!')
             wd = self.wd
+            wd.find_element_by_link_text('home').click()
+            sleep(2)
             self.contact_list_caсhe = []
             for element in wd.find_elements_by_name('entry'):
                 name = element.find_element_by_xpath('.//td[3]').get_attribute("innerHTML")

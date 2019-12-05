@@ -7,5 +7,5 @@ def test_delete_some_contact(app, create_contact):
     app.contact.wait_for\
         ('//*[contains(text(),"Delete record")]')
     new_contacts = app.contact.get_contact_list()
-    old_contacts[index:index-1] = []
+    old_contacts[index:index+1] = []
     assert old_contacts == new_contacts

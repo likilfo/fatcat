@@ -1,7 +1,7 @@
 from model.user import User
 from random import randrange
 
-def test_some_contact(app, create_contact):
+def test_edit_some_contact(app, create_contact):
     old_contacts = create_contact
     index = randrange(len(old_contacts))
     contact = User(firstname='fitty')
