@@ -1,6 +1,8 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+import rstr, re
+
 
 class CommonHelper:
     def fill_fields(self, model_part):
@@ -19,3 +21,18 @@ class CommonHelper:
             return True
         except:
             return False
+
+    def random_string(self):
+        return rstr.xeger(r'[A-Za-z]{3,15}')
+
+    def random_phone(self):
+        return rstr.xeger(r'(\+)?[0-9\v]{10,12}')
+
+    def random_email(self):
+        return rstr.xeger(r'[A-Za-z0-9]{3,10}@[a-z]{3,5}\.[a-z]{2,3}')
+
+    def random_address(self):
+        return rstr.xeger(r'(\+)?[0-9A-Za-z\s]{10,24}')
+
+    def clear(self, reg, sring):
+        return re.sub(reg, '', sring)

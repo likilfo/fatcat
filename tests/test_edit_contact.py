@@ -13,3 +13,4 @@ def test_edit_some_contact(app, create_contact):
     assert sorted(old_contacts, key=User.id_or_max) \
            == sorted(new_contacts, key=User.id_or_max)
 
+
