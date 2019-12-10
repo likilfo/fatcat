@@ -6,13 +6,15 @@ from fixture.application import Application
 fixture = None
 
 @pytest.fixture
-def app():
+def app(request):
     global fixture
+    browser = request.config.getoption('--browser')
+    url = request.config.getoption('--baseUrl')
     if not fixture:
-        fixture = Application()
+        fixture = Application(browser=browser, url=url)
     else:
         if not fixture.is_valid():
-            fixture = Application()
+            fixture = Application(browser=browser,url=url)
     fixture.session.ensure_login('admin', 'secret')
     return fixture
 
@@ -52,3 +54,10 @@ def create_contact():
                                      email2 = fixture.group.random_email(),
                                      email3 = fixture.group.random_email()))
     return fixture.contact.get_contact_list()
+
+
+
+
+def pytest_addoption(parser):
+    parser.addoption('--browser', action='store', default='firefox')
+    parser.addoption('--baseUrl', action='store', default='http://127.0.0.1/addressbook/')

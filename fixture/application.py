@@ -6,9 +6,17 @@ from .contact import ContactHelper
 
 class Application:
 
-    def __init__(self):
-        self.wd = webdriver.Firefox(
-            executable_path=r'C:\Windows\SysWOW64\geckodriver.exe')
+    def __init__(self, browser, url):
+        if browser == 'firefox':
+            self.wd = webdriver.Firefox(
+                executable_path=r'C:\Windows\SysWOW64\geckodriver.exe')
+        elif browser == 'chrome':
+            self.wd = webdriver.Chrome()
+        elif browser == 'ie':
+            self.wd = webdriver.Ie()
+        else:
+            raise ValueError('Unrecognized browser %s' % browser)
+        self.url = url
         self.wd.implicitly_wait(2)
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
@@ -16,7 +24,7 @@ class Application:
 
     def open_home_page(self):
         wd = self.wd
-        wd.get("http://127.0.0.1/addressbook/")
+        wd.get(self.url)
 
     def login_by_admin(self):
         self.session.login(login='admin', password='secret')
