@@ -1,7 +1,7 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-import rstr,string
+import rstr, string, jsonpickle
 
 
 class CommonHelper:
@@ -33,5 +33,14 @@ class CommonHelper:
 
     def random_address(self):
         return rstr.xeger(r'[0-9A-Za-z\n ]{10,24}')
+
+    def create_data_file(self, data_file, testdata):
+        with open(data_file, 'w') as fp:
+            jsonpickle.set_encoder_options('json', indent=2)
+            fp.write(jsonpickle.encode(testdata))
+
+    def load_from_json(self, data_file):
+        with open(data_file) as fp:
+            return jsonpickle.decode(fp.read())
 
 
