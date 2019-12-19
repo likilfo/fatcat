@@ -3,7 +3,8 @@ from model.group import Group
 from model.user import User
 from fixture.application import Application
 from pathlib import Path
-import yaml
+import yaml, importlib
+import jsonpickle
 
 fixture = None
 config = None
@@ -65,3 +66,6 @@ def create_contact():
 def pytest_addoption(parser):
     parser.addoption('--browser', action='store', default='firefox')
     parser.addoption('--config', action='store', default='config.yaml')
+
+
+

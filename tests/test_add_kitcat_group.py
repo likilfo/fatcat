@@ -1,17 +1,7 @@
 # -*- coding: utf-8 -*-
 from model.group import Group
-from fixture.common import CommonHelper
 import pytest
-
-c = CommonHelper()
-test_data = [Group(name=c.random_string(),
-                  header=c.random_string(),
-                  footer=c.random_string())
-             for i in range(5)] + \
-            [Group(name='',
-                   header='',
-                   footer='')]
-
+from generator.groups import test_data
 
 @pytest.mark.parametrize('group', test_data,
                          ids=[repr(x) for x in test_data])
