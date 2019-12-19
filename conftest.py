@@ -2,20 +2,24 @@ import pytest
 from model.group import Group
 from model.user import User
 from fixture.application import Application
+from pathlib import Path
+import yaml
 
 fixture = None
+config = None
 
 @pytest.fixture
 def app(request):
     global fixture
+    global config
+    root_path = Path(__file__).parent.absolute()
+    if config is None:
+        with open(root_path / request.config.getoption('--config')) as fp:
+            config = yaml.load(fp.read())
     browser = request.config.getoption('--browser')
-    url = request.config.getoption('--baseUrl')
-    if not fixture:
-        fixture = Application(browser=browser, url=url)
-    else:
-        if not fixture.is_valid():
-            fixture = Application(browser=browser,url=url)
-    fixture.session.ensure_login('admin', 'secret')
+    if not fixture or not fixture.is_valid():
+        fixture = Application(browser=browser, url=config['baseUrl'])
+    fixture.session.ensure_login(config['username'], config['password'])
     return fixture
 
 
@@ -60,4 +64,4 @@ def create_contact():
 
 def pytest_addoption(parser):
     parser.addoption('--browser', action='store', default='firefox')
-    parser.addoption('--baseUrl', action='store', default='http://127.0.0.1/addressbook/')
+    parser.addoption('--config', action='store', default='config.yaml')
