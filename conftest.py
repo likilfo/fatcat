@@ -60,7 +60,24 @@ def create_contact():
                                      email3 = fixture.group.random_email()))
     return fixture.contact.get_contact_list()
 
+def load_from_module(module):
+    return importlib.import_module('data.%s' % module).test_data
 
+
+def load_from_json(data_file):
+    path = Path(__file__).parent.absolute() / ('data/%s.json' % data_file)
+    with open(path) as fp:
+        return jsonpickle.decode(fp.read())
+
+
+def pytest_generate_tests(metafunc):
+    for fixture in metafunc.fixturenames:
+        if fixture.startswith('data_'):
+            testdata = load_from_module(fixture[5:])
+            metafunc.parametrize(fixture, testdata, ids=[str(x) for x in testdata])
+        elif fixture.startswith('json_'):
+            testdata = load_from_json(fixture[5:])
+            metafunc.parametrize(fixture, testdata, ids=[str(x) for x in testdata])
 
 
 def pytest_addoption(parser):

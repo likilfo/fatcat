@@ -39,8 +39,4 @@ class CommonHelper:
             jsonpickle.set_encoder_options('json', indent=2)
             fp.write(jsonpickle.encode(testdata))
 
-    def load_from_json(self, data_file):
-        with open(data_file) as fp:
-            return jsonpickle.decode(fp.read())
-
 

@@ -25,4 +25,3 @@ testdata = [User(firstname='', middlename='',
 
 data_file = Path(__file__).parent.parent.absolute() / 'data/contacts.json'
 c.create_data_file(data_file, testdata)
-test_data = c.load_from_json(data_file)
