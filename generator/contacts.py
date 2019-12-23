@@ -3,8 +3,8 @@ from model.user import User
 from pathlib import Path
 
 c = CommonHelper()
-testdata = [User(firstname='', middlename='',
-                  lastname='', nickname='',
+testdata = [User(firstname='1', middlename='1',
+                  lastname='1', nickname='',
                   title='', company='', home='',
                   mobile='', work='', address='',
                   email='', email2='',email3='')] + \
@@ -24,4 +24,4 @@ testdata = [User(firstname='', middlename='',
              for i in range(5)]
 
 data_file = Path(__file__).parent.parent.absolute() / 'data/contacts.json'
-c.create_data_file(data_file, testdata)
+GENERATE_OONTACTS = c.create_data_file(data_file, testdata)

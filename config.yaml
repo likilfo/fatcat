@@ -1,3 +1,9 @@
-baseUrl: http://127.0.0.1/addressbook/
-username: admin
-password: secret
+web:
+  baseUrl: http://127.0.0.1/addressbook/
+  username: admin
+  password: secret
+db:
+  host: localhost
+  name: addressbook
+  user: root
+  password: ''

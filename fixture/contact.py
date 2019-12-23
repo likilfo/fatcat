@@ -35,6 +35,15 @@ class ContactHelper(CommonHelper):
         alert.accept()
         self.contact_list_caсhe = None
 
+
+    def delete_contact_by_id(self, id):
+        wd = self.wd
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
+        wd.find_element_by_xpath('//*[@value="Delete"]').click()
+        alert = wd.switch_to.alert
+        alert.accept()
+        self.contact_list_caсhe = None
+
     def edit_first_contact(self, user, index):
         self.edit_contact_by_index(user, index)
 
@@ -42,6 +51,14 @@ class ContactHelper(CommonHelper):
         wd = self.wd
         wd.find_element_by_link_text('home')
         wd.find_elements_by_xpath('//*[@title="Edit"]')[index].click()
+        self.fill_contact_form(user, "update")
+        self.contact_list_caсhe = None
+
+    def edit_contact_by_id(self, user, id):
+        wd = self.wd
+        wd.find_element_by_link_text('home')
+        element = wd.find_element_by_xpath("//*[@value='%s']/.." % id)
+        element.find_element_by_xpath('//*[@title="Edit"]').click()
         self.fill_contact_form(user, "update")
         self.contact_list_caсhe = None
 

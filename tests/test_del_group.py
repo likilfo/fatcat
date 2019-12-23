@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
 from model.group import Group
-from random import randrange
+import random
 
 
-def test_del_some_group(app, create_group):
+def test_del_some_group(app, db, create_group, check_ui):
     old_groups = create_group
-    index = randrange(len(old_groups))
-    app.group.delete_group_by_index(index)
-    new_groups = app.group.get_group_list()
-    assert len(old_groups) - 1 == app.group.count()
-    old_groups[index:index+1] = []
+    group = random.choice(old_groups)
+    app.group.delete_group_by_id(group.id)
+    new_groups = db.get_group_list()
+    old_groups.remove(group)
     assert old_groups == new_groups
+    if check_ui:
+        assert sorted(new_groups, key=Group.id_or_max) \
+               == sorted(app.group.get_group_list(),
+                         key=Group.id_or_max)
