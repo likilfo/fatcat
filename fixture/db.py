@@ -1,6 +1,8 @@
 import pymysql.cursors
 from model.group import Group
 from model.user import User
+from .common import CommonHelper
+import re
 
 class DbFixture:
 
@@ -32,15 +34,35 @@ class DbFixture:
             cursor.close()
         return list
 
+    def clear(self, sring):
+        return re.sub('\r', '', sring)
+
     def get_contact_list(self):
         list = []
         cursor = self.connection.cursor()
         try:
-            cursor.execute('select id, firstname, lastname from addressbook')
+            cursor.execute('select id, firstname, lastname, address, mobile,'
+                           ' home, work, email, email2, email3 from addressbook')
+            contact_helper = CommonHelper()
             for row in cursor:
-                (id, firstname, lastname) = row
-                list.append(User(id=str(id), firstname=firstname,
-                                  lastname=lastname))
+                (id, firstname, lastname, address, mobile, home, work, email, email2, email3) = row
+                address = self.clear(address)
+                all_phones = contact_helper.contacts_like_on_home_page([home, mobile, work])
+                all_emails = contact_helper.contacts_like_on_home_page([email, email2, email3])
+                list.append(User(id=str(id),
+                                 firstname=firstname,
+                                 lastname=lastname,
+                                 address=address,
+                                 home=home,
+                                 mobile=mobile,
+                                 work=work,
+                                 email=email,
+                                 email2=email2,
+                                 email3=email3,
+                                 all_phones=all_phones,
+                                 all_emails=all_emails
+                ))
+
         finally:
             cursor.close()
         return list

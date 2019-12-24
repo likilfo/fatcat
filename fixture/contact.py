@@ -1,7 +1,6 @@
 from .common import CommonHelper
 from model.user import User
 from time import sleep
-import re
 
 
 class ContactHelper(CommonHelper):
@@ -83,15 +82,6 @@ class ContactHelper(CommonHelper):
                                                     address=address, all_phones=all_phones,
                                                     all_emails=email))
         return list(self.contact_list_caсhe)
-
-    def clear(self, sring):
-        return re.sub('[() -]', '', sring)
-
-    def contacts_like_on_home_page(self, contacts):
-        return '\n'.join(
-            filter(lambda x: x != '', (
-                map(lambda x: self.clear(x),
-                    filter(lambda x: x is not None, contacts)))))
 
     def get_contact_from_edit_page(self, index):
         wd = self.wd
