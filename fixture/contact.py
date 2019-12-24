@@ -1,6 +1,7 @@
 from .common import CommonHelper
 from model.user import User
 from time import sleep
+from selenium.webdriver.support.ui import Select
 
 
 class ContactHelper(CommonHelper):
@@ -103,3 +104,24 @@ class ContactHelper(CommonHelper):
                      work=work, email=email, email2=email2,
                      email3=email3, all_phones=all_phones,
                      all_emails=all_emails)
+
+
+    def add_to_group(self, contact_id, group_id):
+        wd = self.wd
+        wd.find_element_by_link_text('home').click()
+        wd.find_element_by_css_selector\
+            ("input[value='%s']" % contact_id).click()
+        Select(wd.find_element_by_name
+               ('to_group')).select_by_value(group_id)
+        wd.find_element_by_name('add').click()
+
+    def remove_from_group(self, contact_id, group_id):
+        wd = self.wd
+        wd.find_element_by_link_text('home').click()
+        wd.find_element_by_css_selector\
+            ("input[value='%s']" % contact_id).click()
+        Select(wd.find_element_by_name
+               ('group')).select_by_value(group_id)
+        wd.find_element_by_name('remove').click()
+
+
