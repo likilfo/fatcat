@@ -106,6 +106,7 @@ class ContactHelper(CommonHelper):
                      all_emails=all_emails)
 
 
+
     def add_to_group(self, contact_id, group_id):
         wd = self.wd
         wd.find_element_by_link_text('home').click()
